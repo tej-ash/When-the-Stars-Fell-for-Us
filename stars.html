@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlit Quote Garden</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+        #sky {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to bottom, #1B263B 0%, #E6E6FA 70%);
+            z-index: 1;
+        }
+        #hills {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 30%;
+            background: linear-gradient(to top, #1A3C34, transparent);
+            z-index: 2;
+        }
+        .flower {
+            position: absolute;
+            bottom: 15%;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+            animation: pulse 2s infinite;
+        }
+        .flower.blue { background: #4B9CDB; }
+        .flower.pink { background: #FF9EC1; }
+        .flower.white { background: #FFFFFF; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .firefly {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #FFD700;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: float 6s infinite, fade 3s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-30px) translateX(20px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+        @keyframes fade {
+            0% { opacity: 0.8; }
+            50% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+        .star {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .star.flash {
+            animation: flash 0.5s;
+        }
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        #falling-star {
+            position: absolute;
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, white, transparent);
+            transform: rotate(45deg);
+            opacity: 0;
+            animation: fall 1.5s forwards;
+        }
+        @keyframes fall {
+            0% { opacity: 1; transform: translateY(-100vh) rotate(45deg); }
+            100% { opacity: 0; transform: translateY(100vh) rotate(45deg); }
+        }
+        #content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            font-size: 20px;
+            display: none;
+            font-family: 'Playfair Display', serif;
+        }
+        button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            z-index: 3;
+            background: #FFD700;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="sky"></div>
+    <div id="hills"></div>
+    <!-- Flowers with explicit positions -->
+    <div class="flower blue" style="left: 10%; bottom: 15%;"></div>
+    <div class="flower pink" style="left: 20%; bottom: 15%;"></div>
+    <div class="flower white" style="left: 30%; bottom: 15%;"></div>
+    <div class="flower blue" style="left: 40%; bottom: 15%;"></div>
+    <div class="flower pink" style="left: 50%; bottom: 15%;"></div>
+    <div class="flower white" style="left: 60%; bottom: 15%;"></div>
+    <!-- Fireflies with explicit positions -->
+    <div class="firefly" style="left: 5%; top: 10%;"></div>
+    <div class="firefly" style="left: 15%; top: 20%;"></div>
+    <div class="firefly" style="left: 25%; top: 30%;"></div>
+    <!-- Stars Container -->
+    <div id="stars-container"></div>
+    <!-- Falling Star and Content -->
+    <div id="falling-star"></div>
+    <div id="content">
+        <p id="quote"></p>
+        <p id="song-placeholder"></p> <!-- Replaced iframe with text placeholder -->
+    </div>
+    <button onclick="selectStar()">Select My Star</button>
+
+    <script>
+        // Initialize stars with debug check
+        const starsContainer = document.getElementById('stars-container');
+        if (!starsContainer) console.error('Stars container not found');
+        const numStars = 20;
+        const stars = [];
+        for (let i = 0; i < numStars; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = ${Math.random() * 90}%;
+            star.style.top = ${Math.random() * 70}%;
+            starsContainer.appendChild(star);
+            stars.push(star);
+        }
+
+        // Add more fireflies dynamically
+        for (let i = 0; i < 15; i++) {
+            const firefly = document.createElement('div');
+            firefly.className = 'firefly';
+            firefly.style.left = ${Math.random() * 100}%;
+            firefly.style.top = ${Math.random() * 100}%;
+            document.body.appendChild(firefly);
+        }
+
+        // Sample data (replace with your girlfriend's Instagram posts)
+        const starData = [
+            { quote: "Follow your heart", song: "Lover by Taylor Swift" },
+            { quote: "Look at the stars", song: "Yellow by Coldplay" },
+            { quote: "You are my sky", song: "Perfect by Ed Sheeran" }
+        ];
+
+        let currentStarIndex = -1;
+
+        function selectStar() {
+            if (!stars || stars.length === 0) {
+                console.error('No stars available');
+                return;
+            }
+            if (currentStarIndex >= 0) {
+                stars[currentStarIndex].classList.remove('flash');
+            }
+            currentStarIndex = Math.floor(Math.random() * stars.length);
+            if (currentStarIndex >= starData.length) currentStarIndex = 0;
+            const selectedStar = stars[currentStarIndex];
+            if (!selectedStar) {
+                console.error('Selected star not found');
+                return;
+            }
+            selectedStar.classList.add('flash');
+
+            // Trigger falling star animation
+            const fallingStar = document.getElementById('falling-star');
+            if (fallingStar) {
+                fallingStar.style.left = ${parseFloat(selectedStar.style.left) + 2.5}%;
+                fallingStar.style.top = ${parseFloat(selectedStar.style.top)}%;
+                fallingStar.style.opacity = 1;
+                setTimeout(() => {
+                    fallingStar.style.opacity = 0;
+                    showContent();
+                }, 1500);
+            } else {
+                console.error('Falling star element not found');
+            }
+
+            setTimeout(() => {
+                selectedStar.classList.remove('flash');
+            }, 500);
+        }
+
+        function showContent() {
+            const content = document.getElementById('content');
+            const quote = document.getElementById('quote');
+            const songPlaceholder = document.getElementById('song-placeholder');
+            if (content && quote && songPlaceholder && starData[currentStarIndex]) {
+                const data = starData[currentStarIndex];
+                quote.textContent = data.quote;
+                songPlaceholder.textContent = Listen to: ${data.song};
+                content.style.display = 'block';
+                setTimeout(() => {
+                    content.style.display = 'none';
+                }, 7000);
+            } else {
+                console.error('Content elements or data missing');
+            }
+        }
+
+        let isSelecting = false;
+        document.querySelector('button').addEventListener('click', () => {
+            if (!isSelecting) {
+                isSelecting = true;
+                selectStar();
+                setTimeout(() => { isSelecting = false; }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>

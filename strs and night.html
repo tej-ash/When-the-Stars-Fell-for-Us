@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Layered Starry Evening</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(
+        to top,
+        #ffd1dc 0%,
+        #fcb7cf 6%,
+        #e9a9cc 12%,
+        #c792d8 18%,
+        #5e548e 30%,
+        #2c2c54 50%,
+        #0d1b2a 70%,
+        #000000 100%
+      );
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .star.white {
+      width: 2px;
+      height: 2px;
+      background: white;
+      opacity: 0.5;
+    }
+
+    .star.gold {
+      width: 4px;
+      height: 4px;
+      background: #FFD700;
+      opacity: 0.9;
+      box-shadow: 0 0 6px #FFD700, 0 0 12px #FFD700;
+      animation: twinkle 2.5s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: 0.9;
+        transform: scale(1);
+        box-shadow: 0 0 6px #FFD700, 0 0 12px #FFD700;
+      }
+      50% {
+        opacity: 0.4;
+        transform: scale(1.3);
+        box-shadow: 0 0 3px #FFD700, 0 0 6px #FFD700;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const totalStars = 100;
+    const glowingStars = 25; // 25 golden glowing stars
+    const whiteStars = totalStars - glowingStars;
+
+    // Add glowing gold stars
+    for (let i = 0; i < glowingStars; i++) {
+      const star = document.createElement('div');
+      star.className = 'star gold';
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.top = `${Math.random() * 100}vh`;
+      star.style.animationDuration = `${2 + Math.random() * 2}s`;
+      document.body.appendChild(star);
+    }
+
+    // Add small white stars
+    for (let i = 0; i < whiteStars; i++) {
+      const star = document.createElement('div');
+      star.className = 'star white';
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.top = `${Math.random() * 100}vh`;
+      document.body.appendChild(star);
+    }
+  </script>
+</body>
+</html>

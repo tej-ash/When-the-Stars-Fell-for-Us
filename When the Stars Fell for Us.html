@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>When the Stars Fell for Us</title>
+  <style>
+     
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(
+        to top,
+        #ffd1dc 10%,
+        #fcb7cf 16%,
+        #e9a9cc 22%,
+        #c792d8 28%,
+        #5e548e 40%,
+        #2c2c54 50%,
+        #0d1b2a 65%,
+        #000000 100%
+      );
+      position: relative;
+    }
+
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      opacity: 0.3;
+      transition: all 0.5s ease-in-out;
+    }
+
+    .glow {
+      background: #FFD700;
+      opacity: 1;
+      box-shadow: 0 0 6px #FFD700, 0 0 12px #FFD700;
+      transform: scale(1.4);
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-1.5px); }
+      100% { transform: translateY(0px); }
+    }
+    @keyframes shake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-5px, 0); }
+  50% { transform: translate(5px, 0); }
+  75% { transform: translate(-5px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+.shake {
+  animation: shake 0.4s;
+}
+
+    .wavy-hill2 {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 50vh;
+      background: #0c2a1e;
+      z-index: 1;
+      clip-path: path('M-10,80 C100,300 400,-50 600,80 C900,400 1000,-60 1200,100 C1400,300 1600,-60 1700,100 L1700,500 L0,500 Z');
+    }
+    .grass {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 20vh;
+      background: #144731;
+      z-index: 2;
+      clip-path: path('M0,100 C100,120 200,80 300,100 C400,120 500,80 600,100 C700,120 800,80 900,100 C1000,120 1100,80 1200,100 C1300,120 1400,80 1500,100 C1600,120 1700,80 1800,100 L1800,500 L0,500 ');
+    }
+   .small-element {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  width: 80px;
+  filter: drop-shadow(0 0 10px #fff);
+  height: auto; /* maintains aspect ratio */
+  z-index: 10;  /* make sure it's above hills */
+}
+    .second-element {
+    position: absolute;
+    bottom: 60px;     /* adjust vertically */
+    left: 1300px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(2px 12px 5px rgba(0, 0, 0, 0.5));
+    z-index: 11;
+  }
+  .third-element {
+    position: absolute;
+    bottom: 50px;     /* adjust vertically */
+    left: 1000px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(-1px 12px 5px rgba(0, 0, 0, 0.5));
+    z-index: 11;
+  }
+  .fourth-element {
+    position: absolute;
+    bottom: 60px;     /* adjust vertically */
+    left: 750px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(-8px 12px 5px rgba(0, 0, 0, 0.5));
+    z-index: 11;
+  }
+  .fifth-element {
+    position: absolute;
+    bottom: 60px;     /* adjust vertically */
+    left: 500px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(-4px 12px 5px rgba(0, 0, 0, 0.5));
+    z-index: 11;
+  }
+  .sixth-element {
+    position: absolute;
+    bottom: 50px;     /* adjust vertically */
+    left: 250px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+     filter: drop-shadow(-10px 20px 9px rgba(0, 0, 0, 0.5));
+    z-index: 11   ;
+  }
+  .seventh-element {
+    position: absolute;
+    bottom: 30px;     /* adjust vertically */
+    left: 50px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(-20px 20px 9px rgba(0, 0, 0, 0.5));
+    z-index: 11;
+  }
+  .butterfly-element {
+    position: absolute;
+    bottom: 100px;     /* adjust vertically */
+    left: 500px;      /* adjust horizontally */
+    width: 100px;
+    height: auto;
+    filter: drop-shadow(-20px 20px 9px rgba(0, 0, 0, 0.5));
+    z-index: 11;
+  }
+  #selectStarBtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #ffd700;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ffd700, 0 0 20px #ff00ff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#selectStarBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px #fff, 0 0 30px #ff00ff;
+}
+.falling-star {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px #fff, 0 0 12px #fff;
+  animation: fall 5s linear forwards;
+  z-index: 20;
+}
+#typedQuote {
+  position: absolute;
+  bottom: 60%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1000;
+}
+
+
+.falling-star::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0px;
+  width: 80px;
+  height: 2px;
+  background: linear-gradient(to right, #ffffff80, transparent);
+  transform: rotate(-30deg);
+}
+@keyframes fall {
+  0% {
+    transform: translate(5, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-600px, 500px);
+    opacity: 0;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Wavy hills -->
+  <div class="wavy-hill2"></div>
+  <div class="grass"></div>
+  <img src="C:\Users\LENOVO\Desktop\starry night\CC_20250705_184420.png" alt="Moon" class="small-element" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\MULTI 2 TBA.png" alt="Moon" class="second-element" id="flower6"/>
+  <img src="C:\Users\LENOVO\Desktop\starry night\MULTI TBA.png" alt="Moon" class="third-element" id="flower5"/>
+  <img src="C:\Users\LENOVO\Desktop\starry night\PINK TBA.png" alt="Moon" class="fourth-element" id="flower4"/>
+  <img src="C:\Users\LENOVO\Desktop\starry night\WHITE 2 TBA.png" alt="Moon" class="fifth-element" id="flower3" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\white TBA.png" alt="Moon" class="sixth-element" id="flower2" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\YELLOW TBA.png" alt="Moon" class="seventh-element" id="flower1" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\19432-unscreen.gif" alt="Moon" class="butterfly-element" />
+ 
+  <div id="typedQuote"></div>
+   
+
+  <script>
+  const totalStars = 120;
+  const groupA = [];
+  const groupB = [];
+
+  for (let i = 0; i < totalStars; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+
+    const size = 3 + Math.random() * 2;
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+
+    star.style.left = `${Math.random() * 100}vw`;
+    star.style.top = `${Math.random() * 100}vh`;
+
+    star.style.animation = `drift ${3 + Math.random() * 2}s ease-in-out infinite`;
+
+    document.body.appendChild(star);
+
+    if (i < totalStars / 2) {
+      groupA.push(star);
+    } else {
+      groupB.push(star);
+    }
+  }
+
+  let toggle = true;
+
+  function switchGlow() {
+    const glowGroup = toggle ? groupA : groupB;
+    const fadeGroup = toggle ? groupB : groupA;
+
+    glowGroup.forEach(star => star.classList.add('glow'));
+    fadeGroup.forEach(star => star.classList.remove('glow'));
+
+    toggle = !toggle;
+  }
+
+  switchGlow();
+  setInterval(switchGlow, 1000);
+
+  // ✅ Typing function (outside button click)
+   function typeQuote(text, elementId, callback) {
+      const el = document.getElementById(elementId);
+      el.textContent = "";
+      let i = 0;
+      const interval = setInterval(() => {
+        if (i < text.length) {
+          el.textContent += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(interval);
+          if (callback) callback();  // Trigger callback after text is done
+        }
+      }, 100);
+    }
+
+  
+  const quotes = [
+    "There's more precious than just nice words!!",
+    "Like Moon & Star at Sky tonight, Wanna shine side by side?!",
+    "Some Moments are meant for mind not the screens yaar!! ",
+    "kinda missing the embrace of Mystry untold!!",
+    "As 🌙 Glows up Night, Will you be tat glow i could seek for?",
+    "Wanna learn about Chords to be Chordially Yours!!",
+    "Yo ur s",
+    "You Light Me Up, as Sun awakens the Moon!! ",
+    "When Sun sparkled on U, is the moment Smthing sparked in Me!!",
+    "Earlier it was you, now its Me!!",
+    "Like the moon needs stars!!",
+    "There's only Me, There's only you!!!",
+    "Admired you under Sunshine, wanna get admired in the rain!!",
+    "Unknowingly my writings are Directed towards you!!",
+    "Consumed your thoughts, now I'm chocking in silence!! "
+  ];
+  const quotes1 = [
+    "I cherish the quite pauses where her eyes say all I long to hear",
+    "I wonder where you found the charm to turn hours into minutes",
+"You play, I lose—funny how I never want to win", 	
+"From butterflies to getting scoldings — what a cute fall", 	
+"Some silences aren’t peaceful — they’re just full of you",
+"Her eyes were the kind that stayed with you, even in the silence",
+"Your every move is like a dance in the rain, where the storm fades and all that's left is the beauty of your grace",
+"Her eyes are a blend of warmth and cold, like the first light of dawn breaking through a cloudy sky.",
+  ];
+
+let quoteIndex = 0;
+
+function getNextQuote() {
+  const quote = quotes[quoteIndex];
+  quoteIndex = (quoteIndex + 1) % quotes.length;
+  return quote;
+}
+
+function getNextQuote1() {
+  const quote = quotes1[quoteIndex];
+  quoteIndex = (quoteIndex + 1) % quotes1.length;
+  return quote;
+}
+
+function typeQuote(text, elementId, callback) {
+  const el = document.getElementById(elementId);
+  el.textContent = "";
+  el.style.opacity = 1;
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      el.textContent += text.charAt(i);
+      i++;
+    } else {
+      clearInterval(interval);
+      if (callback) callback(el);
+    }
+  }, 100);
+}
+
+let typedKeys = "";
+
+document.addEventListener("keydown", function (event) {
+  typedKeys += event.key;
+
+  // limit memory: keep only last 10 characters
+  if (typedKeys.length > 10) {
+    typedKeys = typedKeys.slice(-10);
+  }
+
+  // Trigger for "vidhya"
+  if (typedKeys.endsWith("vidhya")) {
+    const quote = getNextQuote();
+    typeQuote(quote, "typedQuote", (el) => {
+      const fallingStar = document.createElement("div");
+      fallingStar.className = "falling-star";
+      fallingStar.style.left = `${Math.random() * 80 + 10}vw`;
+      fallingStar.style.top = `10vh`;
+      document.body.appendChild(fallingStar);
+
+      setTimeout(() => {
+        el.style.opacity = 0;
+        fallingStar.remove();
+      }, 4000);
+    });
+
+    typedKeys = ""; // reset
+  }
+
+  // Trigger for "TEJASH"
+  if (typedKeys.endsWith("TEJASH")) {
+    const quote = getNextQuote1();
+    typeQuote(quote, "typedQuote", (el) => {
+      const fallingStar = document.createElement("div");
+      fallingStar.className = "falling-star";
+      fallingStar.style.left = `${Math.random() * 80 + 10}vw`;
+      fallingStar.style.top = `10vh`;
+      document.body.appendChild(fallingStar);
+
+      setTimeout(() => {
+        el.style.opacity = 0;
+        fallingStar.remove();
+      }, 4000);
+    });
+
+    typedKeys = ""; // reset
+  }
+});
+
+
+
+
+  document.addEventListener("keydown", function (event) {
+    const key = event.key;
+  if (key === "v" || key==="T") {
+    const flower = document.getElementById("flower1");
+    flower.classList.add("shake");
+  
+    // Remove the class after animation ends to allow re-trigger
+    flower.addEventListener("animationend", function () {
+      flower.classList.remove("shake");
+    }, { once: true });
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+    const key = event.key;
+  if (key === "i" || key==="E") {
+    const flower = document.getElementById("flower2");
+    flower.classList.add("shake");
+  
+    // Remove the class after animation ends to allow re-trigger
+    flower.addEventListener("animationend", function () {
+      flower.classList.remove("shake");
+    }, { once: true });
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+    const key = event.key;
+  if (key === "d" || key==="J") {
+    const flower = document.getElementById("flower3");
+    flower.classList.add("shake");
+  
+    // Remove the class after animation ends to allow re-trigger
+    flower.addEventListener("animationend", function () {
+      flower.classList.remove("shake");
+    }, { once: true });
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+    const key = event.key;
+  if (key === "h" || key==="A") {
+    const flower = document.getElementById("flower4");
+    flower.classList.add("shake");
+  
+    // Remove the class after animation ends to allow re-trigger
+    flower.addEventListener("animationend", function () {
+      flower.classList.remove("shake");
+    }, { once: true });
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+    const key = event.key;
+  if (key === "y" || key==="S") {
+    const flower = document.getElementById("flower5");
+    flower.classList.add("shake");
+  
+    // Remove the class after animation ends to allow re-trigger
+    flower.addEventListener("animationend", function () {
+      flower.classList.remove("shake");
+    }, { once: true });
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+    const key = event.key;
+  if (key === "a" || key==="H") {
+    const flower = document.getElementById("flower6");
+    flower.classList.add("shake");
+  
+    // Remove the class after animation ends to allow re-trigger
+    flower.addEventListener("animationend", function () {
+      flower.classList.remove("shake");
+    }, { once: true });
+  }
+});
+
+
+</script>
+
+    // ✅ Show quote
+  
+</script>
+
+</body>
+</html>
