@@ -80,13 +80,13 @@
   right: 60px;
   width: 80px;
   filter: drop-shadow(0 0 10px #fff);
-  height: auto; /* maintains aspect ratio */
-  z-index: 10;  /* make sure it's above hills */
+  height: auto; 
+  z-index: 10;  
 }
     .second-element {
     position: absolute;
-    bottom: 60px;     /* adjust vertically */
-    left: 1300px;      /* adjust horizontally */
+    bottom: 60px;     
+    left: 1300px;      
     width: 100px;
     height: auto;
     filter: drop-shadow(2px 12px 5px rgba(0, 0, 0, 0.5));
@@ -94,8 +94,8 @@
   }
   .third-element {
     position: absolute;
-    bottom: 50px;     /* adjust vertically */
-    left: 1000px;      /* adjust horizontally */
+    bottom: 50px;     
+    left: 1000px;     
     width: 100px;
     height: auto;
     filter: drop-shadow(-1px 12px 5px rgba(0, 0, 0, 0.5));
@@ -103,8 +103,8 @@
   }
   .fourth-element {
     position: absolute;
-    bottom: 60px;     /* adjust vertically */
-    left: 750px;      /* adjust horizontally */
+    bottom: 60px;    
+    left: 750px;     
     width: 100px;
     height: auto;
     filter: drop-shadow(-8px 12px 5px rgba(0, 0, 0, 0.5));
@@ -112,8 +112,8 @@
   }
   .fifth-element {
     position: absolute;
-    bottom: 60px;     /* adjust vertically */
-    left: 500px;      /* adjust horizontally */
+    bottom: 60px;    
+    left: 500px;    
     width: 100px;
     height: auto;
     filter: drop-shadow(-4px 12px 5px rgba(0, 0, 0, 0.5));
@@ -121,8 +121,8 @@
   }
   .sixth-element {
     position: absolute;
-    bottom: 50px;     /* adjust vertically */
-    left: 250px;      /* adjust horizontally */
+    bottom: 50px;    
+    left: 250px;
     width: 100px;
     height: auto;
      filter: drop-shadow(-10px 20px 9px rgba(0, 0, 0, 0.5));
@@ -130,8 +130,8 @@
   }
   .seventh-element {
     position: absolute;
-    bottom: 30px;     /* adjust vertically */
-    left: 50px;      /* adjust horizontally */
+    bottom: 30px;    
+    left: 50px;      
     width: 100px;
     height: auto;
     filter: drop-shadow(-20px 20px 9px rgba(0, 0, 0, 0.5));
@@ -139,8 +139,8 @@
   }
   .butterfly-element {
     position: absolute;
-    bottom: 100px;     /* adjust vertically */
-    left: 500px;      /* adjust horizontally */
+    bottom: 100px;   
+    left: 500px;     
     width: 100px;
     height: auto;
     filter: drop-shadow(-20px 20px 9px rgba(0, 0, 0, 0.5));
@@ -217,23 +217,23 @@
   </style>
 </head>
 <body>
-  <!-- Wavy hills -->
+  
   <div class="wavy-hill2"></div>
   <div class="grass"></div>
-  <img src="C:\Users\LENOVO\Desktop\starry night\CC_20250705_184420.png" alt="Moon" class="small-element" />
-  <img src="C:\Users\LENOVO\Desktop\starry night\MULTI 2 TBA.png" alt="Moon" class="second-element" id="flower6"/>
-  <img src="C:\Users\LENOVO\Desktop\starry night\MULTI TBA.png" alt="Moon" class="third-element" id="flower5"/>
-  <img src="C:\Users\LENOVO\Desktop\starry night\PINK TBA.png" alt="Moon" class="fourth-element" id="flower4"/>
-  <img src="C:\Users\LENOVO\Desktop\starry night\WHITE 2 TBA.png" alt="Moon" class="fifth-element" id="flower3" />
-  <img src="C:\Users\LENOVO\Desktop\starry night\white TBA.png" alt="Moon" class="sixth-element" id="flower2" />
-  <img src="C:\Users\LENOVO\Desktop\starry night\YELLOW TBA.png" alt="Moon" class="seventh-element" id="flower1" />
-  <img src="C:\Users\LENOVO\Desktop\starry night\19432-unscreen.gif" alt="Moon" class="butterfly-element" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\CC_20250705_184420.png" alt="Moon" class="small-element" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\MULTI 2 TBA.png" alt="Moon" class="second-element" id="flower6"/>
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\MULTI TBA.png" alt="Moon" class="third-element" id="flower5"/>
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\PINK TBA.png" alt="Moon" class="fourth-element" id="flower4"/>
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\WHITE 2 TBA.png" alt="Moon" class="fifth-element" id="flower3" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\white TBA.png" alt="Moon" class="sixth-element" id="flower2" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\YELLOW TBA.png" alt="Moon" class="seventh-element" id="flower1" />
+  <img src="C:\Users\LENOVO\Desktop\starry night\New folder\19432-unscreen.gif" alt="Moon" class="butterfly-element" />
  
   <div id="typedQuote"></div>
    
 
   <script>
-  const totalStars = 120;
+  const totalStars = 174;
   const groupA = [];
   const groupB = [];
 
@@ -246,7 +246,7 @@
     star.style.height = `${size}px`;
 
     star.style.left = `${Math.random() * 100}vw`;
-    star.style.top = `${Math.random() * 100}vh`;
+    star.style.top = `${Math.random() * 90}vh`;
 
     star.style.animation = `drift ${3 + Math.random() * 2}s ease-in-out infinite`;
 
@@ -274,7 +274,7 @@
   switchGlow();
   setInterval(switchGlow, 1000);
 
-  // ✅ Typing function (outside button click)
+ 
    function typeQuote(text, elementId, callback) {
       const el = document.getElementById(elementId);
       el.textContent = "";
@@ -285,7 +285,7 @@
           i++;
         } else {
           clearInterval(interval);
-          if (callback) callback();  // Trigger callback after text is done
+          if (callback) callback();  
         }
       }, 100);
     }
@@ -341,7 +341,7 @@ function typeQuote(text, elementId, callback) {
   el.textContent = "";
   el.style.opacity = 1;
   let i = 0;
-  isTyping = true; // Set before typing starts
+  isTyping = true;
 
   const interval = setInterval(() => {
     if (i < text.length) {
@@ -362,7 +362,7 @@ document.addEventListener("keydown", function (event) {
 
   typedKeys += event.key;
 
-  // limit memory: keep only last 10 characters
+  
   if (typedKeys.length > 10) {
     typedKeys = typedKeys.slice(-10);
   }
@@ -385,7 +385,7 @@ document.addEventListener("keydown", function (event) {
       }, 4000);
     });
 
-    typedKeys = ""; // reset
+    typedKeys = ""; 
   }
 
   // Trigger for "TEJASH"
@@ -419,7 +419,7 @@ document.addEventListener("keydown", function (event) {
     const flower = document.getElementById("flower1");
     flower.classList.add("shake");
   
-    // Remove the class after animation ends to allow re-trigger
+ 
     flower.addEventListener("animationend", function () {
       flower.classList.remove("shake");
     }, { once: true });
@@ -432,7 +432,7 @@ document.addEventListener("keydown", function (event) {
     const flower = document.getElementById("flower2");
     flower.classList.add("shake");
   
-    // Remove the class after animation ends to allow re-trigger
+   
     flower.addEventListener("animationend", function () {
       flower.classList.remove("shake");
     }, { once: true });
@@ -445,7 +445,7 @@ document.addEventListener("keydown", function (event) {
     const flower = document.getElementById("flower3");
     flower.classList.add("shake");
   
-    // Remove the class after animation ends to allow re-trigger
+   
     flower.addEventListener("animationend", function () {
       flower.classList.remove("shake");
     }, { once: true });
@@ -458,7 +458,7 @@ document.addEventListener("keydown", function (event) {
     const flower = document.getElementById("flower4");
     flower.classList.add("shake");
   
-    // Remove the class after animation ends to allow re-trigger
+    
     flower.addEventListener("animationend", function () {
       flower.classList.remove("shake");
     }, { once: true });
@@ -471,7 +471,7 @@ document.addEventListener("keydown", function (event) {
     const flower = document.getElementById("flower5");
     flower.classList.add("shake");
   
-    // Remove the class after animation ends to allow re-trigger
+  
     flower.addEventListener("animationend", function () {
       flower.classList.remove("shake");
     }, { once: true });
@@ -484,7 +484,7 @@ document.addEventListener("keydown", function (event) {
     const flower = document.getElementById("flower6");
     flower.classList.add("shake");
   
-    // Remove the class after animation ends to allow re-trigger
+   
     flower.addEventListener("animationend", function () {
       flower.classList.remove("shake");
     }, { once: true });
